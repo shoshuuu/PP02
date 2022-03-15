@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ZLOBINA_PP02Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AUTHORIZATION">
+          <Key>
+            <PropertyRef Name="LOGIN" />
+          </Key>
+          <Property Name="LOGIN" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="SALT_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CLIENTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIRST_NAME" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="LAST_NAME" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="PATRONYMIC" Type="nvarchar" MaxLength="30" />
+          <Property Name="ADRESS" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PHONE_NUMBER" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="EMAIL" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="REGULAR" Type="bit" />
+          <Property Name="DISCOUNT_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="DISCOUNTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PERCENT_VALUE" Type="int" Nullable="false" />
+          <Property Name="SUM_NEEDED" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ORDERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PRODUCT_ID" Type="int" Nullable="false" />
+          <Property Name="CLIENT_ID" Type="int" Nullable="false" />
+          <Property Name="SELL_DATE" Type="date" Nullable="false" />
+          <Property Name="DELIVERY_DATE" Type="date" Nullable="false" />
+          <Property Name="PRODUCT_QUANTITY" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUCTS_WAREHOUSE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="CATEGORY" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="PRICE" Type="money" Nullable="false" />
+          <Property Name="UNTI" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="QUANTITY" Type="int" />
+        </EntityType>
+        <EntityType Name="SALT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="VALUE" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CLIENT_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__AUTHORIZA__SALT___44FF419A">
+          <End Role="SALT" Type="Self.SALT" Multiplicity="1" />
+          <End Role="AUTHORIZATION" Type="Self.AUTHORIZATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SALT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AUTHORIZATION">
+              <PropertyRef Name="SALT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CLIENTS__DISCOUN__3B75D760">
+          <End Role="DISCOUNTS" Type="Self.DISCOUNTS" Multiplicity="0..1" />
+          <End Role="CLIENTS" Type="Self.CLIENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DISCOUNTS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CLIENTS">
+              <PropertyRef Name="DISCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__CLIENT_I__3F466844">
+          <End Role="CLIENTS" Type="Self.CLIENTS" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="CLIENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__PRODUCT___3E52440B">
+          <End Role="PRODUCTS_WAREHOUSE" Type="Self.PRODUCTS_WAREHOUSE" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTS_WAREHOUSE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="PRODUCT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SALT__CLIENT_ID__4222D4EF">
+          <End Role="CLIENTS" Type="Self.CLIENTS" Multiplicity="1" />
+          <End Role="SALT" Type="Self.SALT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SALT">
+              <PropertyRef Name="CLIENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ZLOBINA_PP02ModelContainer">
+          <EntitySet Name="AUTHORIZATION" EntityType="Self.AUTHORIZATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLIENTS" EntityType="Self.CLIENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DISCOUNTS" EntityType="Self.DISCOUNTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCTS_WAREHOUSE" EntityType="Self.PRODUCTS_WAREHOUSE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SALT" EntityType="Self.SALT" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AUTHORIZA__SALT___44FF419A" Association="Self.FK__AUTHORIZA__SALT___44FF419A">
+            <End Role="SALT" EntitySet="SALT" />
+            <End Role="AUTHORIZATION" EntitySet="AUTHORIZATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CLIENTS__DISCOUN__3B75D760" Association="Self.FK__CLIENTS__DISCOUN__3B75D760">
+            <End Role="DISCOUNTS" EntitySet="DISCOUNTS" />
+            <End Role="CLIENTS" EntitySet="CLIENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__CLIENT_I__3F466844" Association="Self.FK__ORDERS__CLIENT_I__3F466844">
+            <End Role="CLIENTS" EntitySet="CLIENTS" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__PRODUCT___3E52440B" Association="Self.FK__ORDERS__PRODUCT___3E52440B">
+            <End Role="PRODUCTS_WAREHOUSE" EntitySet="PRODUCTS_WAREHOUSE" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SALT__CLIENT_ID__4222D4EF" Association="Self.FK__SALT__CLIENT_ID__4222D4EF">
+            <End Role="CLIENTS" EntitySet="CLIENTS" />
+            <End Role="SALT" EntitySet="SALT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ZLOBINA_PP02Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AUTHORIZATION">
+          <Key>
+            <PropertyRef Name="LOGIN" />
+          </Key>
+          <Property Name="LOGIN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SALT_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SALT" Relationship="Self.FK__AUTHORIZA__SALT___44FF419A" FromRole="AUTHORIZATION" ToRole="SALT" />
+        </EntityType>
+        <EntityType Name="CLIENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIRST_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LAST_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PATRONYMIC" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ADRESS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PHONE_NUMBER" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="REGULAR" Type="Boolean" />
+          <Property Name="DISCOUNT_ID" Type="Int32" />
+          <NavigationProperty Name="DISCOUNT" Relationship="Self.FK__CLIENTS__DISCOUN__3B75D760" FromRole="CLIENTS" ToRole="DISCOUNTS" />
+          <NavigationProperty Name="ORDERS" Relationship="Self.FK__ORDERS__CLIENT_I__3F466844" FromRole="CLIENTS" ToRole="ORDERS" />
+          <NavigationProperty Name="SALTs" Relationship="Self.FK__SALT__CLIENT_ID__4222D4EF" FromRole="CLIENTS" ToRole="SALT" />
+        </EntityType>
+        <EntityType Name="DISCOUNT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PERCENT_VALUE" Type="Int32" Nullable="false" />
+          <Property Name="SUM_NEEDED" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="CLIENTS" Relationship="Self.FK__CLIENTS__DISCOUN__3B75D760" FromRole="DISCOUNTS" ToRole="CLIENTS" />
+        </EntityType>
+        <EntityType Name="ORDER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PRODUCT_ID" Type="Int32" Nullable="false" />
+          <Property Name="CLIENT_ID" Type="Int32" Nullable="false" />
+          <Property Name="SELL_DATE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DELIVERY_DATE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PRODUCT_QUANTITY" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CLIENT" Relationship="Self.FK__ORDERS__CLIENT_I__3F466844" FromRole="ORDERS" ToRole="CLIENTS" />
+          <NavigationProperty Name="PRODUCTS_WAREHOUSE" Relationship="Self.FK__ORDERS__PRODUCT___3E52440B" FromRole="ORDERS" ToRole="PRODUCTS_WAREHOUSE" />
+        </EntityType>
+        <EntityType Name="PRODUCTS_WAREHOUSE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CATEGORY" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PRICE" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="UNTI" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="QUANTITY" Type="Int32" />
+          <NavigationProperty Name="ORDERS" Relationship="Self.FK__ORDERS__PRODUCT___3E52440B" FromRole="PRODUCTS_WAREHOUSE" ToRole="ORDERS" />
+        </EntityType>
+        <EntityType Name="SALT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="VALUE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AUTHORIZATIONs" Relationship="Self.FK__AUTHORIZA__SALT___44FF419A" FromRole="SALT" ToRole="AUTHORIZATION" />
+          <NavigationProperty Name="CLIENT" Relationship="Self.FK__SALT__CLIENT_ID__4222D4EF" FromRole="SALT" ToRole="CLIENTS" />
+        </EntityType>
+        <Association Name="FK__AUTHORIZA__SALT___44FF419A">
+          <End Role="SALT" Type="Self.SALT" Multiplicity="1" />
+          <End Role="AUTHORIZATION" Type="Self.AUTHORIZATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SALT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AUTHORIZATION">
+              <PropertyRef Name="SALT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CLIENTS__DISCOUN__3B75D760">
+          <End Role="DISCOUNTS" Type="Self.DISCOUNT" Multiplicity="0..1" />
+          <End Role="CLIENTS" Type="Self.CLIENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DISCOUNTS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CLIENTS">
+              <PropertyRef Name="DISCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__CLIENT_I__3F466844">
+          <End Role="CLIENTS" Type="Self.CLIENT" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="CLIENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SALT__CLIENT_ID__4222D4EF">
+          <End Role="CLIENTS" Type="Self.CLIENT" Multiplicity="1" />
+          <End Role="SALT" Type="Self.SALT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SALT">
+              <PropertyRef Name="CLIENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__PRODUCT___3E52440B">
+          <End Role="PRODUCTS_WAREHOUSE" Type="Self.PRODUCTS_WAREHOUSE" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTS_WAREHOUSE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="PRODUCT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ZLOBINA_PP02Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AUTHORIZATIONs" EntityType="Self.AUTHORIZATION" />
+          <EntitySet Name="CLIENTS" EntityType="Self.CLIENT" />
+          <EntitySet Name="DISCOUNTS" EntityType="Self.DISCOUNT" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDER" />
+          <EntitySet Name="PRODUCTS_WAREHOUSE" EntityType="Self.PRODUCTS_WAREHOUSE" />
+          <EntitySet Name="SALTs" EntityType="Self.SALT" />
+          <AssociationSet Name="FK__AUTHORIZA__SALT___44FF419A" Association="Self.FK__AUTHORIZA__SALT___44FF419A">
+            <End Role="SALT" EntitySet="SALTs" />
+            <End Role="AUTHORIZATION" EntitySet="AUTHORIZATIONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CLIENTS__DISCOUN__3B75D760" Association="Self.FK__CLIENTS__DISCOUN__3B75D760">
+            <End Role="DISCOUNTS" EntitySet="DISCOUNTS" />
+            <End Role="CLIENTS" EntitySet="CLIENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__CLIENT_I__3F466844" Association="Self.FK__ORDERS__CLIENT_I__3F466844">
+            <End Role="CLIENTS" EntitySet="CLIENTS" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SALT__CLIENT_ID__4222D4EF" Association="Self.FK__SALT__CLIENT_ID__4222D4EF">
+            <End Role="CLIENTS" EntitySet="CLIENTS" />
+            <End Role="SALT" EntitySet="SALTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__PRODUCT___3E52440B" Association="Self.FK__ORDERS__PRODUCT___3E52440B">
+            <End Role="PRODUCTS_WAREHOUSE" EntitySet="PRODUCTS_WAREHOUSE" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ZLOBINA_PP02ModelContainer" CdmEntityContainer="ZLOBINA_PP02Entities">
+          <EntitySetMapping Name="AUTHORIZATIONs">
+            <EntityTypeMapping TypeName="ZLOBINA_PP02Model.AUTHORIZATION">
+              <MappingFragment StoreEntitySet="AUTHORIZATION">
+                <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="SALT_ID" ColumnName="SALT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTS">
+            <EntityTypeMapping TypeName="ZLOBINA_PP02Model.CLIENT">
+              <MappingFragment StoreEntitySet="CLIENTS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+                <ScalarProperty Name="PATRONYMIC" ColumnName="PATRONYMIC" />
+                <ScalarProperty Name="ADRESS" ColumnName="ADRESS" />
+                <ScalarProperty Name="PHONE_NUMBER" ColumnName="PHONE_NUMBER" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="REGULAR" ColumnName="REGULAR" />
+                <ScalarProperty Name="DISCOUNT_ID" ColumnName="DISCOUNT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DISCOUNTS">
+            <EntityTypeMapping TypeName="ZLOBINA_PP02Model.DISCOUNT">
+              <MappingFragment StoreEntitySet="DISCOUNTS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PERCENT_VALUE" ColumnName="PERCENT_VALUE" />
+                <ScalarProperty Name="SUM_NEEDED" ColumnName="SUM_NEEDED" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERS">
+            <EntityTypeMapping TypeName="ZLOBINA_PP02Model.ORDER">
+              <MappingFragment StoreEntitySet="ORDERS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PRODUCT_ID" ColumnName="PRODUCT_ID" />
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="SELL_DATE" ColumnName="SELL_DATE" />
+                <ScalarProperty Name="DELIVERY_DATE" ColumnName="DELIVERY_DATE" />
+                <ScalarProperty Name="PRODUCT_QUANTITY" ColumnName="PRODUCT_QUANTITY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTS_WAREHOUSE">
+            <EntityTypeMapping TypeName="ZLOBINA_PP02Model.PRODUCTS_WAREHOUSE">
+              <MappingFragment StoreEntitySet="PRODUCTS_WAREHOUSE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="UNTI" ColumnName="UNTI" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SALTs">
+            <EntityTypeMapping TypeName="ZLOBINA_PP02Model.SALT">
+              <MappingFragment StoreEntitySet="SALT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

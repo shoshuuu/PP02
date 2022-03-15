@@ -1,0 +1,15 @@
+﻿<Window x:Class="DB_Site.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DB_Site"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="add" Content="Добавить запись
+" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Margin="104,89,0,0" Height="54" Click="Add_Click"/>
+        <Button x:Name="writeTwoTables" Content="Вывод данных из двух таблиц" HorizontalAlignment="Left" Margin="104,186,0,0" VerticalAlignment="Top" Width="208" Height="50" Click="WriteTwoTables_Click"/>
+
+    </Grid>
+</Window>

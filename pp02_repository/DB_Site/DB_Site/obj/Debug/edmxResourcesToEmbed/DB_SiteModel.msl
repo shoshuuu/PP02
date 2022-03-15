@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище ZLOBINA_PP02ModelContainer" CdmEntityContainer="ZLOBINA_PP02Entities">
+    <EntitySetMapping Name="AUTHORIZATIONs">
+      <EntityTypeMapping TypeName="ZLOBINA_PP02Model.AUTHORIZATION">
+        <MappingFragment StoreEntitySet="AUTHORIZATION">
+          <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="SALT_ID" ColumnName="SALT_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CLIENTS">
+      <EntityTypeMapping TypeName="ZLOBINA_PP02Model.CLIENT">
+        <MappingFragment StoreEntitySet="CLIENTS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+          <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+          <ScalarProperty Name="PATRONYMIC" ColumnName="PATRONYMIC" />
+          <ScalarProperty Name="ADRESS" ColumnName="ADRESS" />
+          <ScalarProperty Name="PHONE_NUMBER" ColumnName="PHONE_NUMBER" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="REGULAR" ColumnName="REGULAR" />
+          <ScalarProperty Name="DISCOUNT_ID" ColumnName="DISCOUNT_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DISCOUNTS">
+      <EntityTypeMapping TypeName="ZLOBINA_PP02Model.DISCOUNT">
+        <MappingFragment StoreEntitySet="DISCOUNTS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PERCENT_VALUE" ColumnName="PERCENT_VALUE" />
+          <ScalarProperty Name="SUM_NEEDED" ColumnName="SUM_NEEDED" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ORDERS">
+      <EntityTypeMapping TypeName="ZLOBINA_PP02Model.ORDER">
+        <MappingFragment StoreEntitySet="ORDERS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PRODUCT_ID" ColumnName="PRODUCT_ID" />
+          <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+          <ScalarProperty Name="SELL_DATE" ColumnName="SELL_DATE" />
+          <ScalarProperty Name="DELIVERY_DATE" ColumnName="DELIVERY_DATE" />
+          <ScalarProperty Name="PRODUCT_QUANTITY" ColumnName="PRODUCT_QUANTITY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRODUCTS_WAREHOUSE">
+      <EntityTypeMapping TypeName="ZLOBINA_PP02Model.PRODUCTS_WAREHOUSE">
+        <MappingFragment StoreEntitySet="PRODUCTS_WAREHOUSE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
+          <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+          <ScalarProperty Name="UNTI" ColumnName="UNTI" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SALTs">
+      <EntityTypeMapping TypeName="ZLOBINA_PP02Model.SALT">
+        <MappingFragment StoreEntitySet="SALT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+          <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
